@@ -2,4 +2,4 @@ test:
   tags:
     - osbuild
   script:
-  - echo Hello world!
+  - sh "schutzbot/mockbuild.sh"
