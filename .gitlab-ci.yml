@@ -1,5 +1,5 @@
 test:
   tags:
-    - osbuild
+    - terraform
   script:
   - sh "schutzbot/mockbuild.sh"
