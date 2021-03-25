@@ -2,6 +2,18 @@ stages:
   - init
   - rpmbuild
   - test
+  - finish
+
+default:
+  after_script:
+    - schutzbot/update_github_status.sh update
+
+init:
+  stage: init
+  tags:
+    - shell
+  script:
+    - schutzbot/update_github_status.sh start
 
 F32 x86_64:
   stage: rpmbuild
@@ -141,3 +153,9 @@ CS8 aarch64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
+finish:
+  stage: finish
+  tags:
+    - shell
+  script:
+    - schutzbot/update_github_status.sh finish
