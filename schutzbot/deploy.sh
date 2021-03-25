@@ -9,10 +9,6 @@ set -euxo pipefail
 # pull the -test package from.
 PROJECT=${1:-osbuild-composer}
 
-# Used in the gitlab CI proof of concept so it can upload its rpms to
-# a different location.
-EXTRA_REPO_PATH_SEGMENT="${EXTRA_REPO_PATH_SEGMENT:-}"
-
 # Colorful output.
 function greenprint {
     echo -e "\033[1;32m${1}\033[0m"
@@ -39,11 +35,19 @@ function setup_repo {
   local project=$1
   local commit=$2
   local priority=${3:-10}
+
+  local extra_repo_path_segment_local=""
+  if [[ "$project" == "osbuild-composer" ]];
+    # Used in the gitlab CI proof of concept so it can upload its rpms to
+    # a different location.
+    extra_repo_path_segment_local="${EXTRA_REPO_PATH_SEGMENT:-}"
+  fi
+
   greenprint "Setting up dnf repository for ${project} ${commit}"
   sudo tee "/etc/yum.repos.d/${project}.repo" << EOF
 [${project}]
 name=${project} ${commit}
-baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${EXTRA_REPO_PATH_SEGMENT}${project}/${ID}-${VERSION_ID}/${ARCH}/${commit}
+baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${extra_repo_path_segment_local}${project}/${ID}-${VERSION_ID}/${ARCH}/${commit}
 enabled=1
 gpgcheck=0
 priority=${priority}
