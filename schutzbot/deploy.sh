@@ -37,7 +37,7 @@ function setup_repo {
   local priority=${3:-10}
 
   local extra_repo_path_segment_local=""
-  if [[ "$project" == "osbuild-composer" ]];
+  if [[ "$project" == "osbuild-composer" ]]; then
     # Used in the gitlab CI proof of concept so it can upload its rpms to
     # a different location.
     extra_repo_path_segment_local="${EXTRA_REPO_PATH_SEGMENT:-}"
