@@ -1,5 +1,10 @@
-F32 x86_64 RPM:
-  stage: build
+stages:
+  - init
+  - rpmbuild
+  - test
+
+F32 x86_64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -11,7 +16,7 @@ F32 x86_64 RPM:
 F32 x86_64 Base:
   stage: test
   needs:
-    ["F32 x86_64 RPM"]
+    ["F32 x86_64"]
   tags:
     - terraform
   variables:
@@ -21,8 +26,8 @@ F32 x86_64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-F33 x86_64 RPM:
-  stage: build
+F33 x86_64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -34,7 +39,7 @@ F33 x86_64 RPM:
 F33 x86_64 Base:
   stage: test
   needs:
-    ["F33 x86_64 RPM"]
+    ["F33 x86_64"]
   tags:
     - terraform
   variables:
@@ -44,8 +49,8 @@ F33 x86_64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-CS8 x86_64 RPM:
-  stage: build
+CS8 x86_64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -57,7 +62,7 @@ CS8 x86_64 RPM:
 CS8 x86_64 Base:
   stage: test
   needs:
-    ["CS8 x86_64 RPM"]
+    ["CS8 x86_64"]
   tags:
     - terraform
   variables:
@@ -67,8 +72,8 @@ CS8 x86_64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-F32 aarch64 RPM:
-  stage: build
+F32 aarch64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -80,7 +85,7 @@ F32 aarch64 RPM:
 F32 aarch64 Base:
   stage: test
   needs:
-    ["F32 aarch64 RPM"]
+    ["F32 aarch64"]
   tags:
     - terraform
   variables:
@@ -90,8 +95,8 @@ F32 aarch64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-F33 aarch64 RPM:
-  stage: build
+F33 aarch64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -103,7 +108,7 @@ F33 aarch64 RPM:
 F33 aarch64 Base:
   stage: test
   needs:
-    ["F33 aarch64 RPM"]
+    ["F33 aarch64"]
   tags:
     - terraform
   variables:
@@ -113,8 +118,8 @@ F33 aarch64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-CS8 aarch64 RPM:
-  stage: build
+CS8 aarch64:
+  stage: rpmbuild
   tags:
     - terraform
   variables:
@@ -126,7 +131,7 @@ CS8 aarch64 RPM:
 CS8 aarch64 Base:
   stage: test
   needs:
-    ["CS8 aarch64 RPM"]
+    ["CS8 aarch64"]
   tags:
     - terraform
   variables:
