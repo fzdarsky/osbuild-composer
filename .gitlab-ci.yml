@@ -6,7 +6,7 @@ F33 x86_64 RPM:
     RUNNER: "aws-fedora-33-x86_64"
     EXTRA_REPO_PATH_SEGMENT: "gitlab/"
   script:
-  - sh "schutzbot/mockbuild.sh"
+  - schutzbot/mockbuild.sh
 
 F33 x86_64 Base:
   stage: test
@@ -52,7 +52,7 @@ CS8 x86_64 RPM:
     RUNNER: "aws-centos-stream-8-x86_64"
     EXTRA_REPO_PATH_SEGMENT: "gitlab/"
   script:
-    - sh "schutzbot/mockbuild.sh"
+    - schutzbot/mockbuild.sh
 
 CS8 x86_64 Base:
   stage: test
