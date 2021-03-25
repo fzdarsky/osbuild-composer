@@ -1,26 +1,3 @@
-F33 x86_64 RPM:
-  stage: build
-  tags:
-    - terraform
-  variables:
-    RUNNER: "aws-fedora-33-x86_64"
-    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
-  script:
-  - schutzbot/mockbuild.sh
-
-F33 x86_64 Base:
-  stage: test
-  needs:
-    ["F33 x86_64 RPM"]
-  tags:
-    - terraform
-  variables:
-    RUNNER: "aws-fedora-33-x86_64"
-    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
-  script:
-    - schutzbot/deploy.sh
-    - /usr/libexec/tests/osbuild-composer/base_tests.sh
-
 F32 x86_64 RPM:
   stage: build
   tags:
@@ -39,6 +16,29 @@ F32 x86_64 Base:
     - terraform
   variables:
     RUNNER: "aws-fedora-32-x86_64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
+F33 x86_64 RPM:
+  stage: build
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-33-x86_64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+  - schutzbot/mockbuild.sh
+
+F33 x86_64 Base:
+  stage: test
+  needs:
+    ["F33 x86_64 RPM"]
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-33-x86_64"
     EXTRA_REPO_PATH_SEGMENT: "gitlab/"
   script:
     - schutzbot/deploy.sh
