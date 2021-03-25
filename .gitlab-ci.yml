@@ -66,3 +66,73 @@ CS8 x86_64 Base:
   script:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
+F32 aarch64 RPM:
+  stage: build
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-32-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - sh "schutzbot/mockbuild.sh"
+
+F32 aarch64 Base:
+  stage: test
+  needs:
+    ["F32 aarch64 RPM"]
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-32-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
+F33 aarch64 RPM:
+  stage: build
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-33-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/mockbuild.sh
+
+F33 aarch64 Base:
+  stage: test
+  needs:
+    ["F33 aarch64 RPM"]
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-fedora-33-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
+CS8 aarch64 RPM:
+  stage: build
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-centos-stream-8-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/mockbuild.sh
+
+CS8 aarch64 Base:
+  stage: test
+  needs:
+    ["CS8 aarch64 RPM"]
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-centos-stream-8-aarch64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
