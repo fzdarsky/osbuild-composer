@@ -9,6 +9,10 @@ set -euxo pipefail
 # pull the -test package from.
 PROJECT=${1:-osbuild-composer}
 
+# Used in the gitlab CI proof of concept so it can upload its rpms to
+# a different location.
+EXTRA_REPO_PATH_SEGMENT="${EXTRA_REPO_PATH_SEGMENT:-}"
+
 # Colorful output.
 function greenprint {
     echo -e "\033[1;32m${1}\033[0m"
@@ -39,7 +43,7 @@ function setup_repo {
   sudo tee "/etc/yum.repos.d/${project}.repo" << EOF
 [${project}]
 name=${project} ${commit}
-baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${project}/${ID}-${VERSION_ID}/${ARCH}/${commit}
+baseurl=http://osbuild-composer-repos.s3-website.us-east-2.amazonaws.com/${EXTRA_REPO_PATH_SEGMENT}${project}/${ID}-${VERSION_ID}/${ARCH}/${commit}
 enabled=1
 gpgcheck=0
 priority=${priority}

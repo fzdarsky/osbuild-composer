@@ -1,5 +1,20 @@
-test:
+F33 x86_64 RPM:
+  stage: build
   tags:
     - terraform
+  variables:
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
   script:
   - sh "schutzbot/mockbuild.sh"
+
+F33 x86_64 Base:
+  stage: test
+  needs:
+    ["F33 x86_64 RPM"]
+  tags:
+    - terraform
+  variables:
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
