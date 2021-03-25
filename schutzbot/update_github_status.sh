@@ -22,7 +22,7 @@ else
 fi
 
 curl \
-    -u "$(SCHUTZBOT_LOGIN)" \
+    -u "${SCHUTZBOT_LOGIN}" \
     -X POST \
     -H "Accept: application/vnd.github.v3+json" \
     "https://api.github.com/repos/osbuild/osbuild-composer/statuses/${CI_COMMIT_SHA}" \
