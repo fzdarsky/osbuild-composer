@@ -84,29 +84,6 @@ CS8 x86_64 Base:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
 
-F32 aarch64:
-  stage: rpmbuild
-  tags:
-    - terraform
-  variables:
-    RUNNER: "aws-fedora-32-aarch64"
-    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
-  script:
-    - sh "schutzbot/mockbuild.sh"
-
-F32 aarch64 Base:
-  stage: test
-  needs:
-    ["F32 aarch64"]
-  tags:
-    - terraform
-  variables:
-    RUNNER: "aws-fedora-32-aarch64"
-    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
-  script:
-    - schutzbot/deploy.sh
-    - /usr/libexec/tests/osbuild-composer/base_tests.sh
-
 F33 aarch64:
   stage: rpmbuild
   tags:
