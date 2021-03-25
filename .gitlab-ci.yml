@@ -43,3 +43,26 @@ F32 x86_64 Base:
   script:
     - schutzbot/deploy.sh
     - /usr/libexec/tests/osbuild-composer/base_tests.sh
+
+CS8 x86_64 RPM:
+  stage: build
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-centos-stream-8-x86_64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - sh "schutzbot/mockbuild.sh"
+
+CS8 x86_64 Base:
+  stage: test
+  needs:
+    ["CS8 x86_64 RPM"]
+  tags:
+    - terraform
+  variables:
+    RUNNER: "aws-centos-stream-8-x86_64"
+    EXTRA_REPO_PATH_SEGMENT: "gitlab/"
+  script:
+    - schutzbot/deploy.sh
+    - /usr/libexec/tests/osbuild-composer/base_tests.sh
