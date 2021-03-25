@@ -7,7 +7,7 @@ elif [[ $1 == "finish" ]]; then
   GITHUB_NEW_STATE="success"
   GITHUB_NEW_DESC="I like this commit!"
 elif [[ $1 == "update" ]]; then
-  if [[ $CI_JOB_STATUS == "canceled"]]; then
+  if [[ $CI_JOB_STATUS == "canceled" ]]; then
     GITHUB_NEW_STATE="failure"
     GITHUB_NEW_DESC="Testing this commit was canceled."
   elif [[ $CI_JOB_STATUS == "failed" ]]; then
