@@ -564,7 +564,7 @@ func ostreeCommitAssembler(options distro.ImageOptions, arch distro.Arch) *osbui
 func New() distro.Distro {
 	const GigaByte = 1024 * 1024 * 1024
 
-	iotImgType := imageType{
+	iotImgTypeX86_64 := imageType{
 		name:     "fedora-iot-commit",
 		filename: "commit.tar",
 		mimeType: "application/x-tar",
@@ -625,7 +625,66 @@ func New() distro.Distro {
 			return ostreeCommitAssembler(options, arch)
 		},
 	}
-
+	iotImgTypeAarch64 := imageType{
+		name:     "fedora-iot-commit",
+		filename: "commit.tar",
+		mimeType: "application/x-tar",
+		packages: []string{
+			"fedora-release-iot",
+			"glibc", "glibc-minimal-langpack", "nss-altfiles",
+			"sssd-client", "libsss_sudo", "shadow-utils",
+			"dracut-config-generic", "dracut-network",
+			"rpm-ostree", "polkit", "lvm2",
+			"cryptsetup", "pinentry",
+			"keyutils", "cracklib-dicts",
+			"e2fsprogs", "xfsprogs", "dosfstools",
+			"gnupg2",
+			"basesystem", "python3", "bash",
+			"xz", "gzip",
+			"coreutils", "which", "curl",
+			"firewalld", "iptables",
+			"NetworkManager", "NetworkManager-wifi", "NetworkManager-wwan",
+			"wpa_supplicant", "iwd", "tpm2-pkcs11",
+			"dnsmasq", "traceroute",
+			"hostname", "iproute", "iputils",
+			"openssh-clients", "openssh-server", "passwd",
+			"policycoreutils", "procps-ng", "rootfiles", "rpm",
+			"selinux-policy-targeted", "setup", "shadow-utils",
+			"sudo", "systemd", "util-linux", "vim-minimal",
+			"less", "tar",
+			"fwupd", "usbguard",
+			"greenboot", "greenboot-grub2", "greenboot-rpm-ostree-grub2", "greenboot-reboot", "greenboot-status",
+			"ignition", "zezere-ignition",
+			"rsync", "attr",
+			"ima-evm-utils",
+			"bash-completion",
+			"tmux", "screen",
+			"policycoreutils-python-utils",
+			"setools-console",
+			"audit", "rng-tools", "chrony",
+			"bluez", "bluez-libs", "bluez-mesh",
+			"kernel-tools", "libgpiod-utils",
+			"podman", "container-selinux", "skopeo", "criu",
+			"slirp4netns", "fuse-overlayfs",
+			"clevis", "clevis-dracut", "clevis-luks", "clevis-pin-tpm2",
+			"parsec", "dbus-parsec",
+			// aarch64 specific
+			"grub2-efi-aa64", "efibootmgr", "shim-aa64",
+			"uboot-tools", "uboot-images-armv8", "bcm283x-firmware",
+			"arm-image-installer", "iwl7260-firmware",
+		},
+		enabledServices: []string{
+			"NetworkManager.service", "firewalld.service", "rngd.service", "sshd.service",
+			"zezere_ignition.timer", "zezere_ignition_banner.service",
+			"greenboot-grub2-set-counter", "greenboot-grub2-set-success", "greenboot-healthcheck", "greenboot-rpm-ostree-grub2-check-fallback",
+			"greenboot-status", "greenboot-task-runner", "redboot-auto-reboot", "redboot-task-runner",
+			"parsec", "dbus-parsec",
+		},
+		rpmOstree: true,
+		assembler: func(uefi bool, options distro.ImageOptions, arch distro.Arch) *osbuild.Assembler {
+			return ostreeCommitAssembler(options, arch)
+		},
+	}
 	amiImgType := imageType{
 		name:     "ami",
 		filename: "image.raw",
@@ -826,7 +885,7 @@ func New() distro.Distro {
 		legacy: "i386-pc",
 	}
 	x8664.setImageTypes(
-		iotImgType,
+		iotImgTypeX86_64,
 		amiImgType,
 		qcow2ImageType,
 		openstackImgType,
@@ -847,6 +906,7 @@ func New() distro.Distro {
 		uefi: true,
 	}
 	aarch64.setImageTypes(
+		iotImgTypeAarch64,
 		amiImgType,
 		qcow2ImageType,
 		openstackImgType,
